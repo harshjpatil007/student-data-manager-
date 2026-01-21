@@ -1,33 +1,61 @@
-let students = [];
-console.log(students);
+// Load saved students or create empty array
+let students = JSON.parse(localStorage.getItem("students")) || [];
 
-function searchStudent() {
-    const searchRoll = document.getElementById("searchRoll").value.trim();
-    const resultBox = document.getElementById("result");
+function saveData() {
+    const roll = document.getElementById("roll").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const marks = document.getElementById("marks").value.trim();
 
-    if (searchRoll === "") {
-        resultBox.innerHTML = "⚠️ Please enter roll number";
+    if (!roll || !name || !marks) {
+        alert("⚠️ Please fill all fields.");
         return;
     }
 
-    let foundStudent = null;
-
+    // Check if the roll already exists
     for (let i = 0; i < students.length; i++) {
-        if (students[i].roll == searchRoll) {   // IMPORTANT: use ==
-            foundStudent = students[i];
-            break;
+        if (students[i].roll == roll) {
+            alert("❌ Roll number already exists!");
+            return;
         }
     }
 
-    if (foundStudent) {
+    const student = {
+        roll: roll,
+        name: name,
+        marks: marks
+    };
+
+    students.push(student);
+    localStorage.setItem("students", JSON.stringify(students));
+    alert("✅ Student saved successfully!");
+    clearForm();
+}
+
+function viewData() {
+    const searchRoll = document.getElementById("searchRoll").value.trim();
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = "";
+
+    if (!searchRoll) {
+        resultBox.innerHTML = "⚠️ Enter a roll number to search.";
+        return;
+    }
+
+    const found = students.find(s => s.roll == searchRoll);
+
+    if (found) {
         resultBox.innerHTML = `
-            <p><strong>Roll Number:</strong> ${foundStudent.roll}</p>
-            <p><strong>Name:</strong> ${foundStudent.name}</p>
-            <p><strong>Marks:</strong> ${foundStudent.marks} / 100</p>
+            <strong>Roll Number:</strong> ${found.roll}<br>
+            <strong>Name:</strong> ${found.name}<br>
+            <strong>Marks:</strong> ${found.marks} / 100
         `;
     } else {
-        resultBox.innerHTML = "❌ Student record not found";
+        resultBox.innerHTML = "❌ Student not found.";
     }
 }
 
-
+function clearForm() {
+    document.getElementById("roll").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("marks").value = "";
+}
