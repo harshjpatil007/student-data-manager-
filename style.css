@@ -104,3 +104,13 @@ footer {
     color: white;
     margin-top: 40px;
 }
+.result-box {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 5px;
+    background: #f1f5f9;
+    color: #1f2933;
+    font-weight: 500;
+}
+
+
