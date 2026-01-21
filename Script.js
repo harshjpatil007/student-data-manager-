@@ -1,3 +1,5 @@
+let students = [];
+
 function searchStudent() {
     const searchRoll = document.getElementById("searchRoll").value.trim();
     const resultBox = document.getElementById("result");
@@ -26,3 +28,4 @@ function searchStudent() {
         resultBox.innerHTML = "❌ Student record not found";
     }
 }
+
