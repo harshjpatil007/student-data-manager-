@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h2>Student Management System</h2>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h3>Add Student</h3>
+
+        <form id="studentForm">
+            <input type="text" id="roll" placeholder="Roll Number" required>
+            <input type="text" id="name" placeholder="Student Name" required>
+            <input type="number" id="marks" placeholder="Marks" required>
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Student Records</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll</th>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable"></tbody>
+        </table>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Student Management System | Developed by You</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
