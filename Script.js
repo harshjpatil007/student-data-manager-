@@ -1,61 +1,38 @@
-// Load saved students or create empty array
-let students = JSON.parse(localStorage.getItem("students")) || [];
+function saveStudent() {
+    let roll = document.getElementById("roll").value;
+    let name = document.getElementById("name").value;
+    let marks = document.getElementById("marks").value;
 
-function saveData() {
-    const roll = document.getElementById("roll").value.trim();
-    const name = document.getElementById("name").value.trim();
-    const marks = document.getElementById("marks").value.trim();
-
-    if (!roll || !name || !marks) {
-        alert("⚠️ Please fill all fields.");
+    if (roll === "" || name === "" || marks === "") {
+        alert("Please fill all fields");
         return;
     }
 
-    // Check if the roll already exists
-    for (let i = 0; i < students.length; i++) {
-        if (students[i].roll == roll) {
-            alert("❌ Roll number already exists!");
-            return;
-        }
-    }
+    let students = JSON.parse(localStorage.getItem("students")) || {};
 
-    const student = {
-        roll: roll,
+    students[roll] = {
         name: name,
         marks: marks
     };
 
-    students.push(student);
     localStorage.setItem("students", JSON.stringify(students));
-    alert("✅ Student saved successfully!");
-    clearForm();
-}
+    alert("Student data saved");
 
-function viewData() {
-    const searchRoll = document.getElementById("searchRoll").value.trim();
-    const resultBox = document.getElementById("result");
-    resultBox.innerHTML = "";
-
-    if (!searchRoll) {
-        resultBox.innerHTML = "⚠️ Enter a roll number to search.";
-        return;
-    }
-
-    const found = students.find(s => s.roll == searchRoll);
-
-    if (found) {
-        resultBox.innerHTML = `
-            <strong>Roll Number:</strong> ${found.roll}<br>
-            <strong>Name:</strong> ${found.name}<br>
-            <strong>Marks:</strong> ${found.marks} / 100
-        `;
-    } else {
-        resultBox.innerHTML = "❌ Student not found.";
-    }
-}
-
-function clearForm() {
     document.getElementById("roll").value = "";
     document.getElementById("name").value = "";
     document.getElementById("marks").value = "";
+}
+
+function viewStudent() {
+    let searchRoll = document.getElementById("searchRoll").value;
+    let students = JSON.parse(localStorage.getItem("students")) || {};
+    let output = document.getElementById("result");
+
+    if (students[searchRoll]) {
+        output.innerHTML =
+            "Name: " + students[searchRoll].name + "<br>" +
+            "Marks: " + students[searchRoll].marks + " / 100";
+    } else {
+        output.innerHTML = "No record found";
+    }
 }
