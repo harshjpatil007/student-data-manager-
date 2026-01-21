@@ -1,38 +1,25 @@
-function saveStudent() {
-    let roll = document.getElementById("roll").value;
-    let name = document.getElementById("name").value;
-    let marks = document.getElementById("marks").value;
+const form = document.getElementById("studentForm");
+const table = document.getElementById("studentTable");
 
-    if (roll === "" || name === "" || marks === "") {
-        alert("Please fill all fields");
-        return;
-    }
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    let students = JSON.parse(localStorage.getItem("students")) || {};
+    const roll = document.getElementById("roll").value;
+    const name = document.getElementById("name").value;
+    const marks = document.getElementById("marks").value;
 
-    students[roll] = {
-        name: name,
-        marks: marks
-    };
+    const row = table.insertRow();
 
-    localStorage.setItem("students", JSON.stringify(students));
-    alert("Student data saved");
+    row.innerHTML = `
+        <td>${roll}</td>
+        <td>${name}</td>
+        <td>${marks}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+    `;
 
-    document.getElementById("roll").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("marks").value = "";
-}
+    form.reset();
+});
 
-function viewStudent() {
-    let searchRoll = document.getElementById("searchRoll").value;
-    let students = JSON.parse(localStorage.getItem("students")) || {};
-    let output = document.getElementById("result");
-
-    if (students[searchRoll]) {
-        output.innerHTML =
-            "Name: " + students[searchRoll].name + "<br>" +
-            "Marks: " + students[searchRoll].marks + " / 100";
-    } else {
-        output.innerHTML = "No record found";
-    }
+function deleteRow(btn) {
+    btn.parentElement.parentElement.remove();
 }
